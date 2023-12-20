@@ -6,6 +6,7 @@ TLS Gateway features:
 - Compilation of Peter Wu's wireshark-notes project for the shared library libsslkeylog.so, which is used with LD_PRELOAD
 - Uses socat for establishing a TLS connection
 
+I used this project to work with a websocket server protected by bidirectional TLS authentication.
 
 
 ## Build image
