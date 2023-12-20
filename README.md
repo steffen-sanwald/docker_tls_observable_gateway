@@ -31,7 +31,17 @@ tls_gw_bidirectional "yourdomain.com:443"
 ## Run without bash
 In your host:
 ```bash
-mkdir -p /tmp/sslkeys_h && docker container run -v /tmp/sslkeys_h:/tmp/sslkeys_g -p 8080:1234 -e TARGET_HOSTPORT="yourdomain.com::443" my_tls_gateway tls_gw_bidirectional
+mkdir -p /tmp/sslkeys_h && docker container run -v /tmp/sslkeys_h:/tmp/sslkeys_g -p 8080:1234 -e TARGET_HOSTPORT="yourdomain.com:443" my_tls_gateway tls_gw_bidirectional
 ```
 
+## Test Gateway
+```bash
+echo "Test" | nc -vvv 127.0.0.1 8080
+```
+
+## Decipher in Wireshark
+If you used one of the above approaches, the TLS premaster secrets will be stored at /tmp/sslkeys_h/premaster.txt.
+
+In Wireshark you can add the file, in Settings/Protocols/TLS and then set it at:
+- (Pre-)-Master-Secret log filename
 
