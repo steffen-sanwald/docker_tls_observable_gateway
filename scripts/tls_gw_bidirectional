@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -exu
+# check if arguments is given, if yes take argument as TARGET_HOSTPORT. If not check if environment variable TARGET_HOSTPORT is set. If not raise error and exit
+if [ $# -eq 0 ]; then 
+    if [[ -z "${TARGET_HOSTPORT}" ]]; then
+    echo "environment variable TARGET_HOSTPORT is not set. can not execute script"
+    exit 
+    fi
+else
+    TARGET_HOSTPORT=$1
+fi
+echo "executing script with TARGET_HOSTPORT=${TARGET_HOSTPORT}"
+
+
+SSLKEYLOGFILE=/tmp/sslkeys_g/premaster.txt LD_PRELOAD=/opt/sslkeylog/libsslkeylog.so socat TCP4-LISTEN:1234,fork,reuseaddr ssl:${TARGET_HOSTPORT}},cafile=/opt/certs/ca.crt,cert=/opt/certs/client.crt,key=/opt/keys/client.key
